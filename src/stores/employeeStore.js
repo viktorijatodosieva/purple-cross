@@ -9,6 +9,10 @@ export const useEmployeeStore = defineStore('employeeStore', {
         //TODO: add getters for filtering employees
     },
     actions: {
-        //TODO: addEmployee, updateEmployee, deleteEmployee
+
+        deleteEmployee(code){
+           this.employees = this.employees.filter(employee => employee.code !== code)
+        }
+        //TODO: addEmployee, updateEmployee
     }
 })

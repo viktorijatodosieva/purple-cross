@@ -5,7 +5,7 @@ const router = createRouter({history: createWebHistory(), routes: [
     {path: '/employees', component: () => import('../views/EmployeeList.vue')},
     {path: '/employees/create', component: () => import('../views/EmployeeForm.vue')},
     {path: '/employees/:id', component: () => import('../views/EmployeeProfile.vue')},
-    {path: '/employees/:id/edit', component: () => import('../views/EmployeeForm.vue')}
+    {path: '/employees/edit/:id', component: () => import('../views/EmployeeForm.vue')}
     ]})
 
 export default router
