@@ -1,5 +1,7 @@
 <script setup>
+import {useEmployeeStore} from "@/stores/employeeStore.js";
 
+const store = useEmployeeStore();
 </script>
 
 <template>
