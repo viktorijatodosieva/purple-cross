@@ -46,6 +46,8 @@ function deleteEmployee(code){
 </script>
 
 <template>
+  <div style="padding: 1rem;">
+
   <DataTable :value="store.employees" v-model:filters="filters" filterDisplay="row" tableStyle="min-width: 50rem">
     <template #header>
       <InputText v-model="filters['global'].value" placeholder="Search..." />
@@ -73,7 +75,11 @@ function deleteEmployee(code){
       </template>
     </Column>
   </DataTable>
+  <div style="display: flex; justify-content: flex-end; margin-top: 1rem;">
+    <Button label="Create Employee" @click="router.push('/employees/create')" />
+  </div>
   <ConfirmDialog />
+  </div>
 </template>
 
 <style scoped>
