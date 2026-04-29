@@ -43,7 +43,7 @@ function deleteEmployee() {
       <template #footer>
         <div style="display: flex; gap: 1rem;">
           <Button label="Back" @click="router.push('/employees')" />
-          <Button label="Edit" @click="router.push(`/employees/${employee.code}/edit`)" />
+          <Button label="Edit" @click="router.push(`/employees/edit/${employee.code}`)" />
           <Button label="Delete" severity="danger" @click="deleteEmployee" />
         </div>
       </template>

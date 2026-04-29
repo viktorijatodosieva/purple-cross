@@ -1,13 +1,16 @@
 <script setup>
 import { reactive } from "vue";
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
+import {computed} from 'vue'
 import Button from 'primevue/button'
 import InputText from "primevue/inputtext";
 import DatePicker from "primevue/datepicker";
 import { useEmployeeStore } from "@/stores/employeeStore.js";
 
 const router = useRouter();
+const route = useRoute();
 const store = useEmployeeStore();
+const isEdit = computed(() => route.params.id !== undefined);
 
 const form = reactive({
   code: '',
@@ -40,6 +43,16 @@ function validate() {
   return valid;
 }
 
+if(isEdit.value){
+  const employee = store.employees.find(emp => emp.code === route.params.id);
+  form.code = employee.code;
+  form.fullName = employee.fullName;
+  form.occupation = employee.occupation;
+  form.department = employee.department;
+  form.dateOfEmployment = employee?.dateOfEmployment;
+  form.terminationDate = employee?.terminationDate;
+}
+
 function formatDate(date) {
   if (!date) return null;
   return new Date(date).toISOString().split('T')[0];
@@ -48,14 +61,28 @@ function formatDate(date) {
 function saveEmployee() {
   if (!validate()) return;
 
-  store.addEmployee({
+  if (!isEdit.value) {
+    const exists = store.employees.some(emp => emp.code === form.code.trim())
+    if (exists) {
+      errors.code = 'This code is already in use'
+      return
+    }
+  }
+
+  const employeeData = {
     code: form.code.trim(),
     fullName: form.fullName.trim(),
     occupation: form.occupation.trim(),
     department: form.department.trim(),
     dateOfEmployment: formatDate(form.dateOfEmployment),
     terminationDate: formatDate(form.terminationDate),
-  });
+  }
+
+  if (isEdit.value) {
+    store.updateEmployee(employeeData)
+  } else {
+    store.addEmployee(employeeData)
+  }
 
   router.push('/employees');
 }
@@ -64,11 +91,10 @@ function saveEmployee() {
 
 <template>
   <div>
-    <h1>Create Employee</h1>
-
+    <h1>{{ isEdit ? 'Edit Employee' : 'Create Employee' }}</h1>
     <div>
       <label>Code</label>
-      <InputText v-model="form.code" />
+      <InputText v-model="form.code" :disabled="isEdit" />
       <small v-if="errors.code" style="color: red;">{{ errors.code }}</small>
     </div>
 

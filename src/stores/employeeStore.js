@@ -16,6 +16,11 @@ export const useEmployeeStore = defineStore('employeeStore', {
         addEmployee(employee) {
             this.employees.push(employee)
         },
-        //TODO: updateEmployee
+        updateEmployee(updatedEmployee) {
+            const index = this.employees.findIndex(emp => emp.code === updatedEmployee.code)
+            if(index !== -1){
+                this.employees[index] = updatedEmployee
+            }
+        }
     }
 })
