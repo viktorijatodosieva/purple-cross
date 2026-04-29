@@ -2,6 +2,7 @@
 import {useEmployeeStore} from "@/stores/employeeStore.js";
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
+import { getEmploymentStatus, getTerminationStatus } from '@/utils/dateUtils.js';
 
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
@@ -15,24 +16,7 @@ const store = useEmployeeStore();
 const confirm = useConfirm();
 const filters = ref({
   global: { value: null, matchMode: 'contains' },
-})
-
-function getEmploymentsStatus(dateOfEmployment){
-  if(dateOfEmployment > new Date().toISOString().split('T')[0]){
-    return 'Employed soon'
-  }else if(dateOfEmployment < new Date().toISOString().split('T')[0]){
-    return 'Currently employed'
-  }
-}
-
-function getTerminationStatus(terminationDate){
-  if(!terminationDate) return ''
-  else if(terminationDate > new Date().toISOString().split('T')[0]){
-    return 'To be terminated'
-  }else if(terminationDate < new Date().toISOString().split('T')[0]){
-    return 'Terminated'
-  }
-}
+});
 
 function deleteEmployee(code){
   confirm.require({
@@ -57,7 +41,7 @@ function deleteEmployee(code){
     <Column sortable field="department" header="Department" />
     <Column header="Date of Employment">
       <template #body="{data}">
-        {{getEmploymentsStatus(data.dateOfEmployment)}}
+        {{getEmploymentStatus(data.dateOfEmployment)}}
       </template>
     </Column>
     <Column header="Termination Date">
