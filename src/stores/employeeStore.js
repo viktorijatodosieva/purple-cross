@@ -12,7 +12,10 @@ export const useEmployeeStore = defineStore('employeeStore', {
 
         deleteEmployee(code){
            this.employees = this.employees.filter(employee => employee.code !== code)
-        }
-        //TODO: addEmployee, updateEmployee
+        },
+        addEmployee(employee) {
+            this.employees.push(employee)
+        },
+        //TODO: updateEmployee
     }
 })
