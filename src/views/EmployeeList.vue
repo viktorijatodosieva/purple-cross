@@ -42,12 +42,12 @@ function deleteEmployee(code){
     <Column sortable field="fullName" header="Full Name" />
     <Column sortable field="occupation" header="Occupation" />
     <Column sortable field="department" header="Department" />
-    <Column header="Date of Employment">
+    <Column header="Date of Employment" sortable sort-field="dateOfEmployment">
       <template #body="{data}">
         {{getEmploymentStatus(data.dateOfEmployment)}}
       </template>
     </Column>
-    <Column header="Termination Date">
+    <Column header="Termination Date" sortable sort-field="terminationDate">
       <template #body="{data}">
         {{getTerminationStatus(data.terminationDate)}}
       </template>
