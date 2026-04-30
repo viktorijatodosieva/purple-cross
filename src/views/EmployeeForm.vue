@@ -90,50 +90,111 @@ function saveEmployee() {
 </script>
 
 <template>
-  <div>
-    <h1>{{ isEdit ? 'Edit Employee' : 'Create Employee' }}</h1>
-    <div>
-      <label>Code</label>
-      <InputText v-model="form.code" :disabled="isEdit" />
-      <small v-if="errors.code" style="color: red;">{{ errors.code }}</small>
-    </div>
+  <div class="page-wrapper">
+    <div class="form-card">
+      <h2 class="form-title">{{ isEdit ? 'Edit Employee' : 'Create Employee' }}</h2>
 
-    <div>
-      <label>Full Name</label>
-      <InputText v-model="form.fullName" />
-      <small v-if="errors.fullName" style="color: red;">{{ errors.fullName }}</small>
-    </div>
+      <div class="form-grid">
+        <div class="form-field">
+          <label>Code <span class="required">*</span></label>
+          <InputText v-model="form.code" :disabled="isEdit" class="w-full" />
+          <small v-if="errors.code" class="error">{{ errors.code }}</small>
+        </div>
 
-    <div>
-      <label>Occupation</label>
-      <InputText v-model="form.occupation" />
-      <small v-if="errors.occupation" style="color: red;">{{ errors.occupation }}</small>
-    </div>
+        <div class="form-field">
+          <label>Full Name <span class="required">*</span></label>
+          <InputText v-model="form.fullName" class="w-full" />
+          <small v-if="errors.fullName" class="error">{{ errors.fullName }}</small>
+        </div>
 
-    <div>
-      <label>Department</label>
-      <InputText v-model="form.department" />
-      <small v-if="errors.department" style="color: red;">{{ errors.department }}</small>
-    </div>
-    <div>
-      <label>Date of Employment</label>
-      <DatePicker v-model="form.dateOfEmployment" dateFormat="yy-mm-dd" />
-    </div>
+        <div class="form-field">
+          <label>Occupation <span class="required">*</span></label>
+          <InputText v-model="form.occupation" class="w-full" />
+          <small v-if="errors.occupation" class="error">{{ errors.occupation }}</small>
+        </div>
 
-    <div>
-      <label>Termination Date</label>
-      <DatePicker v-model="form.terminationDate" dateFormat="yy-mm-dd" />
-    </div>
+        <div class="form-field">
+          <label>Department <span class="required">*</span></label>
+          <InputText v-model="form.department" class="w-full" />
+          <small v-if="errors.department" class="error">{{ errors.department }}</small>
+        </div>
 
-    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
-      <Button label="Save" @click="saveEmployee" />
-      <Button label="Cancel" @click="router.push('/employees')" />
-    </div>
+        <div class="form-field">
+          <label>Date of Employment</label>
+          <DatePicker v-model="form.dateOfEmployment" dateFormat="yy-mm-dd" class="w-full" />
+        </div>
 
+        <div class="form-field">
+          <label>Termination Date</label>
+          <DatePicker v-model="form.terminationDate" dateFormat="yy-mm-dd" class="w-full" />
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <Button label="Cancel" severity="secondary" @click="router.push('/employees')" />
+        <Button label="Save" @click="saveEmployee" />
+      </div>
+    </div>
   </div>
-
 </template>
 
 <style scoped>
+.page-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
 
+.form-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+  width: 100%;
+  max-width: 700px;
+}
+
+.form-title {
+  color: #7c3aed;
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-field label {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.required {
+  color: #7c3aed;
+}
+
+.error {
+  color: red;
+  font-size: 0.8rem;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
 </style>
