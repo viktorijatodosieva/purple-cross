@@ -32,7 +32,10 @@ function deleteEmployee(code){
 <template>
   <div style="padding: 1rem;">
 
-  <DataTable :value="store.employees" v-model:filters="filters" filterDisplay="row" tableStyle="min-width: 50rem">
+  <DataTable :value="store.employeesWithStatus"
+             v-model:filters="filters" filterDisplay="row"
+             :globalFilterFields="['fullName', 'occupation', 'department', 'employmentStatus', 'terminationStatus']"
+             tableStyle="min-width: 50rem">
     <template #header>
       <InputText v-model="filters['global'].value" placeholder="Search..." />
     </template>

@@ -6,7 +6,16 @@ export const useEmployeeStore = defineStore('employeeStore', {
         employees: employeesData
     }),
     getters: {
-        //TODO: add getters for filtering employees
+        employeesWithStatus: (state) => {
+            return state.employees.map(emp => ({
+                ...emp,
+                employmentStatus: emp.dateOfEmployment > new Date().toISOString().split('T')[0]
+                    ? 'Employed soon' : 'Currently employed',
+                terminationStatus: !emp.terminationDate ? ''
+                    : emp.terminationDate > new Date().toISOString().split('T')[0]
+                        ? 'To be terminated' : 'Terminated'
+            }))
+        }
     },
     actions: {
 
