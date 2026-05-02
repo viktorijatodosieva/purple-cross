@@ -197,4 +197,27 @@ function saveEmployee() {
   gap: 1rem;
   margin-top: 2rem;
 }
+
+@media (max-width: 640px) {
+  .page-wrapper {
+    padding: 1rem;
+  }
+
+  .form-card {
+    padding: 1.25rem;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions :deep(.p-button) {
+    width: 100%;
+    justify-content: center;
+  }
+}
 </style>

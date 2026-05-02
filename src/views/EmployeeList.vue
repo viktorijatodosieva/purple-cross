@@ -156,7 +156,7 @@ function handleImport(event) {
 </script>
 
 <template>
-  <div style="padding: 2rem;">
+  <div class="page-content">
 
   <div class="table-wrapper">
   <DataTable :value="store.employeesWithStatus"
@@ -220,11 +220,15 @@ function handleImport(event) {
   font-size: 0.95rem;
 }
 
+.page-content {
+  padding: 2rem;
+}
+
 .table-wrapper {
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
+  overflow-x: auto;
 }
 
 .table-header {
@@ -232,6 +236,8 @@ function handleImport(event) {
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 
 .table-header h2 {
@@ -243,6 +249,7 @@ function handleImport(event) {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
 .table-header-actions :deep(.p-inputtext) {
@@ -251,5 +258,29 @@ function handleImport(event) {
 
 .table-header-actions :deep(.p-inputtext:hover) {
   border-color: rgb(233, 213, 255);
+}
+
+@media (max-width: 640px) {
+  .page-content {
+    padding: 1rem;
+  }
+
+  .table-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .table-header-actions {
+    width: 100%;
+  }
+
+  .table-header-actions :deep(.p-iconfield) {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .table-header-actions :deep(.p-inputtext) {
+    width: 100%;
+  }
 }
 </style>

@@ -47,4 +47,14 @@ import Avatar from 'primevue/avatar'
   font-size: 0.9rem;
   font-weight: 500;
 }
+
+@media (max-width: 640px) {
+  .navbar {
+    padding: 0.75rem 1rem;
+  }
+
+  .navbar-brand {
+    font-size: 1.1rem;
+  }
+}
 </style>
