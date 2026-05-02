@@ -8,6 +8,7 @@ import PrimeVue from 'primevue/config';
 import Aura from '@primeuix/themes/aura'
 import 'primeicons/primeicons.css'
 import ConfirmationService from "primevue/confirmationservice";
+import ToastService from "primevue/toastservice";
 import { definePreset} from "@primeuix/themes";
 
 
@@ -32,6 +33,7 @@ const app = createApp(App)
 app.use(router)
 app.use(createPinia())
 app.use(ConfirmationService)
+app.use(ToastService)
 app.use(PrimeVue, {
     theme: {
         preset: PurplePreset,
