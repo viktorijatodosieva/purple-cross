@@ -13,6 +13,10 @@ const confirm = useConfirm();
 
 const employee = store.employees.find(emp => emp.code === route.params.id);
 
+if (!employee) {
+  router.replace('/employees');
+}
+
 function deleteEmployee() {
   confirm.require({
     message: 'Are you sure you want to delete this employee?',
@@ -28,7 +32,7 @@ function deleteEmployee() {
 
 <template>
   <div class="page-wrapper">
-    <div class="profile-card">
+    <div v-if="employee" class="profile-card">
 
       <div class="profile-header">
         <div class="profile-avatar">

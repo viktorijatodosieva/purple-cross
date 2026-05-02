@@ -43,14 +43,19 @@ function validate() {
   return valid;
 }
 
-if(isEdit.value){
+if (isEdit.value) {
   const employee = store.employees.find(emp => emp.code === route.params.id);
-  form.code = employee.code;
-  form.fullName = employee.fullName;
-  form.occupation = employee.occupation;
-  form.department = employee.department;
-  form.dateOfEmployment = employee?.dateOfEmployment;
-  form.terminationDate = employee?.terminationDate;
+
+  if (!employee) {
+    router.replace('/employees');
+  } else {
+    form.code = employee.code;
+    form.fullName = employee.fullName;
+    form.occupation = employee.occupation;
+    form.department = employee.department;
+    form.dateOfEmployment = employee.dateOfEmployment;
+    form.terminationDate = employee.terminationDate;
+  }
 }
 
 function formatDate(date) {
