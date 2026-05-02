@@ -26,6 +26,7 @@ const errors = reactive({
   fullName: '',
   occupation: '',
   department: '',
+  terminationDate: '',
 });
 
 function validate() {
@@ -36,7 +37,14 @@ function validate() {
   errors.occupation = form.occupation.trim() ? '' : 'Occupation is required';
   errors.department = form.department.trim() ? '' : 'Department is required';
 
-  if (errors.code || errors.fullName || errors.occupation || errors.department) {
+  if (form.terminationDate && form.dateOfEmployment && new Date(form.terminationDate) < new Date(form.dateOfEmployment)) {
+    errors.terminationDate = 'Termination date cannot be before the date of employment';
+    valid = false;
+  } else {
+    errors.terminationDate = '';
+  }
+
+  if (errors.code || errors.fullName || errors.occupation || errors.department || errors.terminationDate) {
     valid = false;
   }
 
@@ -132,6 +140,7 @@ function saveEmployee() {
         <div class="form-field">
           <label>Termination Date</label>
           <DatePicker v-model="form.terminationDate" dateFormat="yy-mm-dd" class="w-full" />
+          <small v-if="errors.terminationDate" class="error">{{ errors.terminationDate }}</small>
         </div>
       </div>
 
