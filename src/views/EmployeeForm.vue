@@ -1,16 +1,36 @@
 <script setup>
-import { reactive } from "vue";
+import { reactive, ref, computed } from "vue";
 import { useRouter, useRoute } from 'vue-router'
-import {computed} from 'vue'
 import Button from 'primevue/button'
 import InputText from "primevue/inputtext";
 import DatePicker from "primevue/datepicker";
+import AutoComplete from "primevue/autocomplete";
 import { useEmployeeStore } from "@/stores/employeeStore.js";
 
 const router = useRouter();
 const route = useRoute();
 const store = useEmployeeStore();
 const isEdit = computed(() => route.params.id !== undefined);
+
+const allDepartments = [...new Set(store.employees.map(e => e.department).filter(Boolean))].sort()
+const allOccupations = [...new Set(store.employees.map(e => e.occupation).filter(Boolean))].sort()
+
+const departmentSuggestions = ref([])
+const occupationSuggestions = ref([])
+
+function searchDepartment(event) {
+  const q = event.query.toLowerCase()
+  departmentSuggestions.value = q
+    ? allDepartments.filter(d => d.toLowerCase().includes(q))
+    : allDepartments
+}
+
+function searchOccupation(event) {
+  const q = event.query.toLowerCase()
+  occupationSuggestions.value = q
+    ? allOccupations.filter(o => o.toLowerCase().includes(q))
+    : allOccupations
+}
 
 const form = reactive({
   code: '',
@@ -122,13 +142,22 @@ function saveEmployee() {
 
         <div class="form-field">
           <label>Occupation <span class="required">*</span></label>
-          <InputText v-model="form.occupation" class="w-full" />
+          <AutoComplete v-model="form.occupation"
+                        :suggestions="occupationSuggestions"
+                        @complete="searchOccupation"
+                        @dropdown-click="occupationSuggestions = allOccupations"
+                        dropdown
+                        class="w-full" />
           <small v-if="errors.occupation" class="error">{{ errors.occupation }}</small>
         </div>
 
         <div class="form-field">
           <label>Department <span class="required">*</span></label>
-          <InputText v-model="form.department" class="w-full" />
+          <AutoComplete v-model="form.department"
+                        :suggestions="departmentSuggestions"
+                        @complete="searchDepartment"
+                        dropdown
+                        class="w-full" />
           <small v-if="errors.department" class="error">{{ errors.department }}</small>
         </div>
 
@@ -202,6 +231,10 @@ function saveEmployee() {
 }
 
 .w-full {
+  width: 100%;
+}
+
+.w-full :deep(.p-autocomplete-input) {
   width: 100%;
 }
 
